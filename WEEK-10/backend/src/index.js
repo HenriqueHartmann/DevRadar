@@ -1,8 +1,17 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const routes = require('./routes');
 
 const app = express();
 
+mongoose.connect('mongodb+srv://admin:admin@cluster0-g1wqx.mongodb.net/week10?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    
+});
+
 app.use(express.json());
+app.use(routes);
 
 // Métodos HTTP: GET(buscar uma informação), POST(criar uma informação), PUT(editar uma informação), DELETE(deletar um informação)
 
@@ -13,10 +22,5 @@ app.use(express.json());
 // Body: request.body (Dados para criação ou alteração de um registro)
 
 // MongoDB: (Banco de Dados - Não-relacional)
-
-app.post('/users', (request, response) => {
-    console.log(request.body);
-    return response.json({ message: 'Hello OmniStack' });
-});
 
 app.listen(3333);
