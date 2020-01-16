@@ -4,9 +4,13 @@ const SearchController = require('./controllers/SearchController');
 
 const routes = Router();
 
-routes.get('/devs', DevController.index);
-routes.post('/devs', DevController.store);
+//DevController Routes
+routes.get('/devs/index', DevController.index);
+routes.post('/devs/store', DevController.store);
+routes.put('/devs/update', DevController.update);
+routes.delete('/devs/delete', DevController.destroy);
 
+//SearchController Routes
 routes.get('/search', SearchController.index);
 
 module.exports = routes;
