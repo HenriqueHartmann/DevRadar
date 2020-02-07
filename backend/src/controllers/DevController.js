@@ -1,6 +1,7 @@
 const axios = require('axios');
 const Dev = require('../models/Dev');
 const parseStringAsArray = require('../utils/parseStringAsArray');
+const { findConnections, sendMessage } = require('../websocket');
 
 // Um controller tem no máximo 5 funções: index, show, store, update, destroy
 // Um controller não deve repetir inúmeras vezes funções parecidas
@@ -36,7 +37,17 @@ module.exports = {
                 bio,
                 techs: techsArray,
                 location,
-            });
+            })
+
+            //Filtrar as conexões que estão a no máximo a 10km de distância
+            //e que o novo dev tenha pelo menos uma das tecnologias filtradas
+
+            const sendSocketMessageTo = findConnections(
+                { latitude, longitude },
+                techsArray
+            )
+
+            sendMessage(sendSocketMessageTo, 'new-dev', dev);
         }
     
         return response.json(dev);
